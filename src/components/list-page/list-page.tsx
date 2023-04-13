@@ -35,7 +35,7 @@ type TAllDisable = {
 
 export const ListPage: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>('');
-  const [inputIndex, setInputIndex] = useState<number>();
+  const [inputIndex, setInputIndex] = useState<number>(0);
   const [arrSymbols, setArrSymbols] = useState<TArrSymbol[]>([]);
   const [isLoader, setIsLoader] = useState<TButtonState>({
     addHead: false,
@@ -84,6 +84,7 @@ export const ListPage: React.FC = () => {
 
 
   const controlBatton = (value: string = '') => {
+    
     let addByIndexState = true
     if (value && inputIndex) {
       addByIndexState = false
@@ -104,12 +105,19 @@ export const ListPage: React.FC = () => {
   const changeInputIndex = (evt: React.SyntheticEvent<HTMLInputElement, Event>) => {
     const element = evt.currentTarget.value;
     setInputIndex(Number(element));
+
     let addByIndexState = true
-    if (element && inputValue) {
+    if (element && inputValue  ) {
       addByIndexState = false
     }
+
+    let verifIndex = false
+    if (Number(element) >= arrSymbols.length) {
+      verifIndex = true
+    }
+
     if (element) {
-      setButtonState({ ...buttonState, removeByIndex: false, addByIndex: addByIndexState });
+      setButtonState({ ...buttonState, removeByIndex: verifIndex, addByIndex: addByIndexState });
     }
     else {
       setButtonState({ ...buttonState, removeByIndex: true, addByIndex: addByIndexState });
@@ -229,7 +237,7 @@ export const ListPage: React.FC = () => {
     setIsLoader({ ...isLoader, removeByIndex: true })
     linksList.remove(inputIndex!)
     setButtonState({ ...allDis, removeByIndex: false })
-    setInputIndex(undefined)
+    setInputIndex(0)
 
     for (let i = 0; i <= inputIndex!; i++) {
       arrSymbols[i].state = ElementStates.Changing;
@@ -270,7 +278,7 @@ export const ListPage: React.FC = () => {
     const value = createElem(inputValue);
     setIsLoader({ ...isLoader, addByIndex: true })
     setButtonState({ ...allDis, addByIndex: false })
-    setInputIndex(undefined);
+    setInputIndex(0);
     setInputValue('');
 
     for (let i = 0; i < inputIndex!; i++) {
@@ -358,7 +366,7 @@ export const ListPage: React.FC = () => {
           placeholder="Введите индекс"
           extraClass={styles.input}
           maxLength={2}
-          value={inputIndex || ''}
+          value={inputIndex === 0 ? '' : inputIndex}
           onChange={changeInputIndex}
           disabled={
             isLoader.addHead ||

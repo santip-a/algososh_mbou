@@ -20,6 +20,12 @@ type TBacklight = {
   state: ElementStates
 }
 
+type TIsLoader = {
+  isLoaderAdd: boolean
+  isLoaderDel: boolean
+  isLoaderClear: boolean
+}
+
 
 export const QueuePage: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>('');
@@ -27,6 +33,11 @@ export const QueuePage: React.FC = () => {
   const [taskInProgressPush, setTaskInProgressPush] = useState<boolean>(true);
   const [taskInProgressDel, setTaskInProgressDel] = useState<boolean>(true);
   const [backlight, setBacklight] = useState<TBacklight>({ index: 0, state: ElementStates.Default })
+  const [isLoader, setIsloader] = useState<TIsLoader>({
+    isLoaderAdd: false,
+    isLoaderDel: false,
+    isLoaderClear: false
+  })
 
   const queue = useMemo(() => new Queue<string>(7), []);
 
@@ -46,11 +57,11 @@ export const QueuePage: React.FC = () => {
     const arrData = queue.getQueue();
     setArrSymbols([...arrData]);
     setBacklight({ index: indx, state: ElementStates.Changing })
-    await setPause(500);
     setBacklight({ index: indx, state: ElementStates.Default })
   }
 
   const enqueue = async () => {
+    setIsloader({...isLoader, isLoaderAdd: true})
     const numberTail = queue.getTail();
     if (numberTail >= 7) {
       return
@@ -60,19 +71,27 @@ export const QueuePage: React.FC = () => {
     setTaskInProgressDel(false);
     setTaskInProgressPush(true);
     setInputValue('')
+    await setPause(500);
+    setIsloader({...isLoader, isLoaderAdd: false})
   }
 
-  const dequeue = () => {
+  const dequeue = async () => {
+    setIsloader({...isLoader, isLoaderDel: true})
     const numberHead = queue.getHead();
     queue.dequeue('');
-    showQueue(numberHead)
+    showQueue(numberHead);
+    await setPause(500);
+    setIsloader({...isLoader, isLoaderDel: false})
   }
 
-  const clear = () => {
+  const clear = async () => {
+    setIsloader({...isLoader, isLoaderClear: true})
     queue.clear();
     const emptyArray = queue.getQueue()
     setArrSymbols([...emptyArray]);
     setTaskInProgressDel(true);
+    await setPause(500);
+    setIsloader({...isLoader, isLoaderClear: false})
   }
 
 
@@ -92,16 +111,19 @@ export const QueuePage: React.FC = () => {
           extraClass={styles.buttonAdd}
           onClick={enqueue}
           disabled={taskInProgressPush}
+          isLoader={isLoader.isLoaderAdd}
         />
         <Button
           text="Удалить"
           extraClass={styles.buttonDelete}
           onClick={dequeue}
           disabled={taskInProgressDel}
+          isLoader={isLoader.isLoaderDel}
         />
         <Button
           text="Очистить"
           onClick={clear}
+          isLoader={isLoader.isLoaderClear}
         />
       </div>
 

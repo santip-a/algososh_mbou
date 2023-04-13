@@ -9,10 +9,11 @@ import { Circle } from '../ui/circle/circle';
 
 export const FibonacciPage: FC = () => {
 
-  const [inputValue, setInputValue] = useState<string>("");
+  const [inputValue, setInputValue] = useState<number>(0);
   const [taskInProgress, setTaskInProgress] = useState<boolean>(false);
   const [numbersState, setNumbersState] = useState<number[]>([])
   const [showCircles, setShowCircles] = useState<boolean>(false);
+  const [disabledBatton, setDisabledBatton] = useState<boolean>(false)
   const fib: number[] = [];
   const fibNumbers: number[] = fib.map((item) => {
     return item
@@ -20,10 +21,14 @@ export const FibonacciPage: FC = () => {
 
   const onChange = (evt: React.SyntheticEvent<HTMLInputElement, Event>) => {
     const element = evt.currentTarget.value;
-    setInputValue(element);
+    if (element.length >= 19) {
+      setDisabledBatton(true)
+    }
+    setInputValue(Number(element));
   };
 
-  const goTheTask = async (inputValue: string) => {
+  const goTheTask = async (inputValue: number ) => {
+
     setShowCircles(true);
     setTaskInProgress(true);
     const fibNumber = Number(inputValue)
@@ -53,13 +58,13 @@ export const FibonacciPage: FC = () => {
         <Input
           maxLength={19}
           extraClass={style.input}
-          value={inputValue}
+          value={inputValue === 0 ? '' : inputValue}
           onChange={onChange}
           isLimitText={true}
         />
         <Button
           text={'Развернуть'}
-          disabled={!inputValue}
+          disabled={!inputValue || disabledBatton}
           isLoader={taskInProgress}
           onClick={() => goTheTask(inputValue)}
         />
