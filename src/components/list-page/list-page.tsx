@@ -35,7 +35,7 @@ type TAllDisable = {
 
 export const ListPage: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>('');
-  const [inputIndex, setInputIndex] = useState<number>(0);
+  const [inputIndex, setInputIndex] = useState<string>('');
   const [arrSymbols, setArrSymbols] = useState<TArrSymbol[]>([]);
   const [isLoader, setIsLoader] = useState<TButtonState>({
     addHead: false,
@@ -104,17 +104,19 @@ export const ListPage: React.FC = () => {
 
   const changeInputIndex = (evt: React.SyntheticEvent<HTMLInputElement, Event>) => {
     const element = evt.currentTarget.value;
-    setInputIndex(Number(element));
-
-    let addByIndexState = true
-    if (element && inputValue  ) {
-      addByIndexState = false
-    }
+    setInputIndex(element);
 
     let verifIndex = false
     if (Number(element) >= arrSymbols.length) {
       verifIndex = true
     }
+
+    let addByIndexState = true
+    if (element && inputValue  && !verifIndex ) {
+      addByIndexState = false
+    }
+
+
 
     if (element) {
       setButtonState({ ...buttonState, removeByIndex: verifIndex, addByIndex: addByIndexState });
@@ -157,7 +159,6 @@ export const ListPage: React.FC = () => {
   const addInTail = async () => {
     setInputValue('');
     setIsLoader({ ...isLoader, addTail: true })
-    // setButtonState({ ...buttonState, addHead: true, addTail: true });
     setButtonState({ ...allDis, addTail: false })
     const elem = createElem(inputValue)
     linksList.append(elem)
@@ -234,12 +235,13 @@ export const ListPage: React.FC = () => {
   }
 
   const removeByIndex = async () => {
+    let index = Number(inputIndex)
     setIsLoader({ ...isLoader, removeByIndex: true })
-    linksList.remove(inputIndex!)
+    linksList.remove(index)
     setButtonState({ ...allDis, removeByIndex: false })
-    setInputIndex(0)
+    setInputIndex('')
 
-    for (let i = 0; i <= inputIndex!; i++) {
+    for (let i = 0; i <= index; i++) {
       arrSymbols[i].state = ElementStates.Changing;
       setArrSymbols([...arrSymbols])
       await setPause(500);
@@ -247,15 +249,15 @@ export const ListPage: React.FC = () => {
     setArrSymbols([...arrSymbols])
     await setPause(500);
 
-    arrSymbols[inputIndex!].remove = true;
-    arrSymbols[inputIndex!].stateMini = ElementStates.Changing;
-    arrSymbols[inputIndex!].valueMini = arrSymbols[inputIndex!].value;
-    arrSymbols[inputIndex!].value = '';
+    arrSymbols[index].remove = true;
+    arrSymbols[index].stateMini = ElementStates.Changing;
+    arrSymbols[index].valueMini = arrSymbols[index].value;
+    arrSymbols[index].value = '';
     setArrSymbols([...arrSymbols])
     await setPause(500);
 
-    arrSymbols.splice(inputIndex!, 1)
-    for (let i = 0; i < inputIndex!; i++) {
+    arrSymbols.splice(index, 1)
+    for (let i = 0; i < index; i++) {
       arrSymbols[i].state = ElementStates.Default;
     }
     setArrSymbols([...arrSymbols])
@@ -275,13 +277,14 @@ export const ListPage: React.FC = () => {
   }
 
   const addByIndex = async () => {
+    let index = Number(inputIndex)
     const value = createElem(inputValue);
     setIsLoader({ ...isLoader, addByIndex: true })
     setButtonState({ ...allDis, addByIndex: false })
-    setInputIndex(0);
+    setInputIndex('');
     setInputValue('');
 
-    for (let i = 0; i < inputIndex!; i++) {
+    for (let i = 0; i < index; i++) {
       arrSymbols[i].insert = true;
       arrSymbols[i].valueMini = inputValue
       arrSymbols[i].stateMini = ElementStates.Changing;
@@ -291,24 +294,24 @@ export const ListPage: React.FC = () => {
       arrSymbols[i].state = ElementStates.Changing;
     }
 
-    arrSymbols[inputIndex!].insert = true;
-    arrSymbols[inputIndex!].valueMini = inputValue
-    arrSymbols[inputIndex!].stateMini = ElementStates.Changing;
+    arrSymbols[index].insert = true;
+    arrSymbols[index].valueMini = inputValue
+    arrSymbols[index].stateMini = ElementStates.Changing;
     setArrSymbols([...arrSymbols])
     await setPause(500);
-    arrSymbols[inputIndex!].insert = false;
+    arrSymbols[index].insert = false;
 
-    arrSymbols.splice(inputIndex!, 0, value)
-    for (let i = 0; i < inputIndex!; i++) {
+    arrSymbols.splice(index, 0, value)
+    for (let i = 0; i < index; i++) {
       arrSymbols[i].state = ElementStates.Default;
     }
 
-    arrSymbols[inputIndex!].state = ElementStates.Modified;
+    arrSymbols[index].state = ElementStates.Modified;
     setArrSymbols([...arrSymbols])
     await setPause(500);
-    arrSymbols[inputIndex!].state = ElementStates.Default;
+    arrSymbols[index].state = ElementStates.Default;
 
-    linksList.insertAfter(inputIndex!, value)
+    linksList.insertAfter(index, value)
     setArrSymbols(getList());
     setButtonState({ ...buttonState, addHead: true, addTail: true, addByIndex: true, removeByIndex: true })
     setIsLoader({ ...isLoader, addByIndex: false })
@@ -365,8 +368,10 @@ export const ListPage: React.FC = () => {
         <Input
           placeholder="Введите индекс"
           extraClass={styles.input}
-          maxLength={2}
-          value={inputIndex === 0 ? '' : inputIndex}
+          min="0"
+          max={arrSymbols.length - 1}          
+          type="number"
+          value={inputIndex}
           onChange={changeInputIndex}
           disabled={
             isLoader.addHead ||

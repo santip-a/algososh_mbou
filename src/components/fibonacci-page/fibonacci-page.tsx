@@ -9,7 +9,7 @@ import { Circle } from '../ui/circle/circle';
 
 export const FibonacciPage: FC = () => {
 
-  const [inputValue, setInputValue] = useState<number>(0);
+  const [inputValue, setInputValue] = useState<string>('');
   const [taskInProgress, setTaskInProgress] = useState<boolean>(false);
   const [numbersState, setNumbersState] = useState<number[]>([])
   const [showCircles, setShowCircles] = useState<boolean>(false);
@@ -20,14 +20,17 @@ export const FibonacciPage: FC = () => {
   });
 
   const onChange = (evt: React.SyntheticEvent<HTMLInputElement, Event>) => {
-    const element = evt.currentTarget.value;
-    if (element.length >= 19) {
+    const element = Number( evt.currentTarget.value)
+    
+    if (element > 19) {
       setDisabledBatton(true)
+    } else {
+      setDisabledBatton(false)
     }
-    setInputValue(Number(element));
+    setInputValue(String(element));
   };
 
-  const goTheTask = async (inputValue: number ) => {
+  const goTheTask = async (inputValue: string ) => {
 
     setShowCircles(true);
     setTaskInProgress(true);
@@ -56,11 +59,12 @@ export const FibonacciPage: FC = () => {
     <SolutionLayout title="Последовательность Фибоначчи">
       <div className={style.block}>
         <Input
-          maxLength={19}
+          max={19}
           extraClass={style.input}
-          value={inputValue === 0 ? '' : inputValue}
+          value={inputValue}
           onChange={onChange}
           isLimitText={true}
+          type="number"
         />
         <Button
           text={'Развернуть'}
