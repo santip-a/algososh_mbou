@@ -1,0 +1,18 @@
+.block {
+  display: flex;
+  justify-content: center
+}
+
+.input {
+  width: 377px;
+  margin-right: 12px;
+}
+
+.circles {
+  display: flex;
+  justify-content: center
+}
+
+.circle {
+  margin-right: 16px;
+}
