@@ -99,7 +99,6 @@ export const QueuePage: React.FC = () => {
     <SolutionLayout title="Очередь">
       <div className={styles.container}>
         <Input
-          data-testid="input"
           extraClass={styles.input}
           type="text"
           maxLength={4}
@@ -108,7 +107,6 @@ export const QueuePage: React.FC = () => {
           onChange={onChange}
         />
         <Button
-          data-testid="button"
           text="Добавить"
           extraClass={styles.buttonAdd}
           onClick={enqueue}
@@ -116,7 +114,6 @@ export const QueuePage: React.FC = () => {
           isLoader={isLoader.isLoaderAdd}
         />
         <Button
-          data-testid="buttonDelete"
           text="Удалить"
           extraClass={styles.buttonDelete}
           onClick={dequeue}
@@ -124,7 +121,6 @@ export const QueuePage: React.FC = () => {
           isLoader={isLoader.isLoaderDel}
         />
         <Button
-          data-testid="buttonClear"
           text="Очистить"
           onClick={clear}
           isLoader={isLoader.isLoaderClear}
