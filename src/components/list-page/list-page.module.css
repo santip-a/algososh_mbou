@@ -1,0 +1,54 @@
+.container {
+  display: flex;
+  margin: 12px auto;
+  justify-content: center;
+  height: 90px;
+}
+
+.input {
+  max-width: 204px;
+  margin-right: 12px;
+}
+
+.button_list {
+  width: 175px;
+  margin-right: 12px;
+}
+
+.button_index {
+  width: 362px;
+  margin-right: 12px;
+}
+
+.circles {
+  display: flex;
+  margin: 90px auto auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.circle {
+  margin-right: 10px;
+}
+
+.circle_insertion {
+  position: absolute;
+  top: -60px;
+  left: 14px;
+  z-index: 1;
+  background-color: white;
+}
+
+.circle_removal {
+  position: absolute;
+  top: 112px;
+  left: 14px;
+  background-color: white;
+}
+
+.items {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
