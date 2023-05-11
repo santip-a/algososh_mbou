@@ -32,21 +32,22 @@ export const StringComponent: FC = () => {
     const length = arrSymbols.length - 1
 
     for (let i = 0; i <= Math.floor(length / 2); i++) {
-
       const temp = arrSymbols[i];
 
       temp.state = ElementStates.Changing;
       arrSymbols[length - i].state = ElementStates.Changing
       await setPause(1000);
       setSybolsState([...arrSymbols])
+
       temp.state = ElementStates.Modified;
       arrSymbols[length - i].state = ElementStates.Modified
       await setPause(1000);
 
       arrSymbols[i] = arrSymbols[length - i];
       arrSymbols[length - i] = temp;
-      setSybolsState([...arrSymbols])
+      // setSybolsState([...arrSymbols])
     }
+
     setTaskInProgress(false);
   }
 
@@ -55,6 +56,7 @@ export const StringComponent: FC = () => {
     <SolutionLayout title="Строка">
       <div className={style.block}>
         <Input
+          data-testid="input"
           maxLength={11}
           extraClass={style.input}
           value={inputValue}
@@ -62,6 +64,7 @@ export const StringComponent: FC = () => {
           isLimitText={true}
         />
         <Button
+          data-testid="button"
           text={'Развернуть'}
           disabled={!inputValue}
           isLoader={taskInProgress}
