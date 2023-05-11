@@ -67,7 +67,7 @@ export const FibonacciPage: FC = () => {
           type="number"
         />
         <Button
-          text={'Развернуть'}
+          text={'Рассчитать'}
           disabled={!inputValue || disabledBatton}
           isLoader={taskInProgress}
           onClick={() => goTheTask(inputValue)}
