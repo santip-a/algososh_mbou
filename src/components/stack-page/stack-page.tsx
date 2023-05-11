@@ -97,7 +97,6 @@ export const StackPage: React.FC = () => {
     <SolutionLayout title="Стек">
       <div className={styles.container}>
         <Input
-          data-testid="input"
           extraClass={styles.input}
           type="text"
           maxLength={4}
@@ -106,7 +105,6 @@ export const StackPage: React.FC = () => {
           onChange={onChange}
         />
         <Button
-          data-testid="button"
           text="Добавить"
           extraClass={styles.buttonAdd}
           onClick={push}
@@ -114,7 +112,6 @@ export const StackPage: React.FC = () => {
           isLoader={loaderPush}
         />
         <Button
-          data-testid="buttonDelete"
           text="Удалить"
           extraClass={styles.buttonDelete}
           onClick={pop}
@@ -122,7 +119,6 @@ export const StackPage: React.FC = () => {
           isLoader={loaderPop}
         />
         <Button
-          data-testid="buttonClear"
           text="Очистить"
           disabled={taskInProgressDel}
           onClick={clearStack}

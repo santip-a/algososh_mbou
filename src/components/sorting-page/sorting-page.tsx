@@ -13,7 +13,7 @@ type TArrSymbol = {
   state: ElementStates
 }
 
-export const SortingPage: React.FC<{ initArray?: Array<number> }> = ({initArray: initialArray}) => {
+export const SortingPage: React.FC = () => {
   const [radioCheked, setRadioCheked] = useState<'selection' | 'bubble'>("selection");
   const [arrNumbers, setArrNumbers] = useState<TArrSymbol[]>([]);
   const [taskInProgressUpSort, setTaskInProgressUpSort] = useState<boolean>(false);
@@ -21,16 +21,7 @@ export const SortingPage: React.FC<{ initArray?: Array<number> }> = ({initArray:
 
 
   useEffect(() => {
-    if(initialArray) {
-      const testArray: TArrSymbol[] = []
-      initialArray.forEach((value) => {
-        testArray.push({number: value, state: ElementStates.Default})
-      })
-      setArrNumbers(testArray)
-    } 
-    else {
-      randomArr();
-    }    
+    randomArr();
   }, []);
 
   const swithSort = (variantSort: 'topSort' | 'downSort') => {
@@ -121,9 +112,7 @@ export const SortingPage: React.FC<{ initArray?: Array<number> }> = ({initArray:
       }
       arrCopy[d].state = ElementStates.Modified
     }
-    if(arrCopy[0]) {
-      arrCopy[0].state = ElementStates.Modified;
-    }
+    arrCopy[0].state = ElementStates.Modified;
     setTaskInProgressUDownSort(false);
     setTaskInProgressUpSort(false)
     setArrNumbers([...arrCopy])
@@ -134,7 +123,6 @@ export const SortingPage: React.FC<{ initArray?: Array<number> }> = ({initArray:
     <SolutionLayout title="Сортировка массива">
       <div className={styles.block}>
         <RadioInput
-          data-testid="radio-selection"
           label="Выбор"
           extraClass={styles.radio}
           value="selection"
@@ -143,7 +131,6 @@ export const SortingPage: React.FC<{ initArray?: Array<number> }> = ({initArray:
           disabled={taskInProgressDownSort || taskInProgressUpSort}
         />
         <RadioInput
-          data-testid="radio-bubble"
           label="Пузырёк"
           extraClass={styles.radio}
           value="bubble"
@@ -152,16 +139,15 @@ export const SortingPage: React.FC<{ initArray?: Array<number> }> = ({initArray:
           disabled={taskInProgressDownSort || taskInProgressUpSort}
         />
         <Button
-          data-testid="button-sort-up"
           text="По возрастанию"
           sorting={Direction.Ascending}
           extraClass={styles.button_sortUp}
+          // onClick={() => getSortUp("topSort")}
           onClick={() => swithSort("topSort")}
           isLoader={taskInProgressUpSort}
           disabled={taskInProgressDownSort}
         />
         <Button
-          data-testid="button-sort-down"
           text="По убыванию"
           sorting={Direction.Descending}
           extraClass={styles.button_sortDown}
@@ -175,7 +161,7 @@ export const SortingPage: React.FC<{ initArray?: Array<number> }> = ({initArray:
           disabled={taskInProgressUpSort || taskInProgressDownSort}
         />
       </div>
-      <ul data-testid="column-elem" className={styles.columns}>
+      <ul className={styles.columns}>
         {
           arrNumbers.map((item, index) => {
             return (

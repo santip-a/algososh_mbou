@@ -400,7 +400,7 @@ export const ListPage: React.FC = () => {
       <ul className={styles.circles}>
         {arrSymbols.map((item, index) => {
           return (
-            <li data-testid="listItem" key={index} className={styles.items}>
+            <li key={index} className={styles.items}>
               <Circle
                 state={item.state}
                 extraClass={styles.circle}
