@@ -1,3 +1,5 @@
+import {circle, circleSmall} from './constants';
+
 describe("List page tests", () => {
   beforeEach(() => {
     cy.visit('/list')
@@ -6,7 +8,7 @@ describe("List page tests", () => {
     cy.contains('button', 'Удалить из tail').as('deleteTail_btn');
     cy.contains('button', 'Удалить из head').as('deleteHead_btn');
     cy.contains('button', 'Добавить по индексу').as('addIndex_btn');
-    cy.contains('button', 'Удалить по индексу').as('deleteIndex_btn');
+    cy.contains('button', 'Удалить по индексу').as('deleteIndex_btn');    
     cy.get('input[placeholder="Введите значение"]').as('inputValue')
     cy.get('input[placeholder="Введите индекс"]').as('inputIndex')
   })
@@ -26,10 +28,10 @@ describe("List page tests", () => {
   })
 
   it("отрисовка дефолтного списка", () => {
-    cy.get('div[class*="circle_circle"]').its("length").should("be.gte", 3).and("be.lte", 6);
-    cy.get('div[class*="circle_circle"]').first().siblings('[class*="circle_head"]').should("have.text", "head");
-    cy.get('div[class*="circle_circle"]').last().siblings('div[class*="circle_tail"]').should("have.text", "tail");
-    cy.get('div[class*="circle_circle"]').each(($el, index) => {
+    cy.get(circle).its("length").should("be.gte", 3).and("be.lte", 6);
+    cy.get(circle).first().siblings('[class*="circle_head"]').should("have.text", "head");
+    cy.get(circle).last().siblings('div[class*="circle_tail"]').should("have.text", "tail");
+    cy.get(circle).each(($el, index) => {
       cy.wrap($el)
         .should("have.css", "border", "4px solid rgb(0, 50, 255)")
         .and("not.to.be.empty")
@@ -44,12 +46,12 @@ describe("List page tests", () => {
       .type('1')
       .should("have.value", '1');
     cy.get("@addHead_btn").should("be.visible").click();
-    cy.get('div [class*=circle_small]')
+    cy.get(circleSmall)
       .first()
       .should("have.text", '1')
       .should("have.css", "border", "4px solid rgb(210, 82, 225)")
     cy.tick(500);
-    cy.get('div[class*="circle_circle"]')
+    cy.get(circle)
       .eq(0)
       .should("have.text", '1')
       .should("have.css", "border", "4px solid rgb(127, 224, 81)")
@@ -60,7 +62,7 @@ describe("List page tests", () => {
       .siblings('p[class*="circle_index"]')
       .should("have.text", 0);
     cy.tick(500);
-    cy.get('div[class*="circle_circle"]').eq(1).should("have.css", "border", "4px solid rgb(0, 50, 255)");
+    cy.get(circle).eq(1).should("have.css", "border", "4px solid rgb(0, 50, 255)");
   });
 
   it("Добавление элемента в tail", () => {
@@ -69,13 +71,13 @@ describe("List page tests", () => {
       .type('2')
       .should("have.value", '2');
     cy.get("@addTail_btn").should("be.visible").click();
-    cy.get('div [class*=circle_small]')
+    cy.get(circleSmall)
       .last()
       .should("have.text", '2')
       .should("have.css", "border", "4px solid rgb(127, 224, 81)");
     cy.tick(500);
     cy.get('div [class*=circle_modified]');
-    cy.get('div[class*="circle_circle"]')
+    cy.get(circle)
       .last()
       .should("have.text", '2')
       .should("have.css", "border", "4px solid rgb(127, 224, 81)")
@@ -84,7 +86,7 @@ describe("List page tests", () => {
       .siblings('div[class*="circle_tail"]')
       .should("have.text", "tail");
     cy.tick(500);
-    cy.get('div[class*="circle_circle"]').should("have.css", "border", "4px solid rgb(0, 50, 255)");
+    cy.get(circle).should("have.css", "border", "4px solid rgb(0, 50, 255)");
   });
 
 
@@ -95,7 +97,7 @@ describe("List page tests", () => {
     cy.get("@inputIndex").should("be.empty").type(2)
     cy.get("@addIndex_btn").should("not.be.disabled").click()
 
-    cy.get('div[data-testid="circle"]')
+    cy.get(circle)
       .as("circles")
       .eq(1)
       .should("have.css", "border-color", "rgb(210, 82, 225)")
@@ -114,10 +116,10 @@ describe("List page tests", () => {
   it("Удаление элемента из head.", () => {
     cy.clock()
     cy.get("@deleteHead_btn").should("not.be.disabled").click()
-    cy.get('div[data-testid="circle"]').eq(0).should("have.text", "")
+    cy.get(circle).eq(0).should("have.text", "")
     cy.get("[class*=circle_small]").should("have.css", "border-color", "rgb(210, 82, 225)")
     cy.tick(1000)
-    cy.get('div[data-testid="circle"]')
+    cy.get(circle)
       .eq(0)
       .parent()
       .should("contain", "head")
@@ -126,10 +128,10 @@ describe("List page tests", () => {
   it("Удаления элемента из tail", () => {
     cy.clock()
     cy.get("@deleteTail_btn").should("not.be.disabled").click()
-    cy.get('div[data-testid="circle"]').eq(3).should("have.text", "")
+    cy.get(circle).eq(3).should("have.text", "")
     cy.get("[class*=circle_small]").should("have.css", "border-color", "rgb(210, 82, 225)")
     cy.tick(1000)
-    cy.get('div[data-testid="circle"]')
+    cy.get(circle)
       .eq(2)
       .parent()
       .should("contain", "tail")
@@ -141,13 +143,13 @@ describe("List page tests", () => {
       .type('111')
       .should("have.value", '111');
     cy.get("@addHead_btn").should("be.visible").click();
-    cy.get('div [class*=circle_small]')
+    cy.get(circleSmall)
       .first()
       .should("have.text", '111')
       .should("have.css", "border", "4px solid rgb(210, 82, 225)")
     cy.tick(500);
 
-    cy.get('div[class*="circle_circle"]')
+    cy.get(circle)
       .eq(0)
       .should("have.text", '111')
       .should("have.css", "border", "4px solid rgb(127, 224, 81)")
@@ -163,13 +165,13 @@ describe("List page tests", () => {
       .type('222')
       .should("have.value", '222');
     cy.get("@addHead_btn").should("be.visible").click();
-    cy.get('div [class*=circle_small]')
+    cy.get(circleSmall)
       .first()
       .should("have.text", '222')
       .should("have.css", "border", "4px solid rgb(210, 82, 225)")
     cy.tick(500);
 
-    cy.get('div[class*="circle_circle"]')
+    cy.get(circle)
       .eq(0)
       .should("have.text", '222')
       .should("have.css", "border", "4px solid rgb(127, 224, 81)")
@@ -180,32 +182,32 @@ describe("List page tests", () => {
       .siblings('p[class*="circle_index"]')
       .should("have.text", 0);
     cy.tick(500);
-    cy.get('div[class*="circle_circle"]').eq(1).should("have.css", "border", "4px solid rgb(0, 50, 255)");
+    cy.get(circle).eq(1).should("have.css", "border", "4px solid rgb(0, 50, 255)");
 
 
     cy.clock();
     cy.get("@inputIndex").type(1).should("have.value", 1);
     cy.get("@deleteIndex_btn").should("be.visible").click();
     cy.tick(500);
-    cy.get('div[class*="circle_circle"]').first().should("have.css", "border", "4px solid rgb(210, 82, 225)");
+    cy.get(circle).first().should("have.css", "border", "4px solid rgb(210, 82, 225)");
     cy.tick(500);
-    cy.get('div[class*="circle_circle"]').each(($el, index) => {
+    cy.get(circle).each(($el, index) => {
       if ([1, 1].includes(index)) {
         cy.wrap($el).should("have.css", "border", "4px solid rgb(210, 82, 225)");
       }
     });
     cy.tick(500);
-    cy.get('div [class*=circle_small]')
+    cy.get(circleSmall)
       .should("have.text", '111')
       .should("have.css", "border", "4px solid rgb(210, 82, 225)");
-    cy.get('div[class*="circle_circle"]').each(($el, index) => {
+    cy.get(circle).each(($el, index) => {
       if ([2].includes(index)) {
         cy.wrap($el).should("not.have.text");
       }
     });
     cy.tick(500);
-    cy.get('div [class*=circle_small]').should("not.exist");
-    cy.get('div[class*="circle_circle"]').each(($el, index) => {
+    cy.get(circleSmall).should("not.exist");
+    cy.get(circle).each(($el, index) => {
       cy.wrap($el).should("not.to.be.empty");
     });
   })

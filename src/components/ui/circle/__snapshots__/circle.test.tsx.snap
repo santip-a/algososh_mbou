@@ -6,11 +6,13 @@ exports[`Рендер Circle Рендер Circle с head 1`] = `
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head string"
+    data-testid="circle-head"
   >
     1
   </div>
   <div
     className="circle   default"
+    data-testid="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -32,9 +34,11 @@ exports[`Рендер Circle Рендер Circle с index 1`] = `
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
+    data-testid="circle-head"
   />
   <div
     className="circle   default"
+    data-testid="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -58,15 +62,18 @@ exports[`Рендер Circle Рендер Circle с react-элементом 1`]
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
+    data-testid="circle-head"
   >
     <div
       className="content "
     >
       <div
         className="text text_type_input text_color_input mb-4 absolute head element"
+        data-testid="circle-head"
       />
       <div
         className="circle   default"
+        data-testid="circle"
       >
         <p
           className="text text_type_circle text_color_input letter"
@@ -83,6 +90,7 @@ exports[`Рендер Circle Рендер Circle с react-элементом 1`]
   </div>
   <div
     className="circle   default"
+    data-testid="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -104,9 +112,11 @@ exports[`Рендер Circle Рендер Circle с react-элементом в 
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
+    data-testid="circle-head"
   />
   <div
     className="circle   default"
+    data-testid="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -124,9 +134,11 @@ exports[`Рендер Circle Рендер Circle с react-элементом в 
     >
       <div
         className="text text_type_input text_color_input mb-4 absolute head element"
+        data-testid="circle-head"
       />
       <div
         className="circle   default"
+        data-testid="circle"
       >
         <p
           className="text text_type_circle text_color_input letter"
@@ -150,9 +162,11 @@ exports[`Рендер Circle Рендер Circle с tail 1`] = `
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
+    data-testid="circle-head"
   />
   <div
     className="circle   default"
+    data-testid="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -176,9 +190,11 @@ exports[`Рендер Circle Рендер Circle с пропом isSmall ===  tr
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
+    data-testid="circle-head"
   />
   <div
     className="circle  small default"
+    data-testid="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -200,9 +216,11 @@ exports[`Рендер Circle Рендер Circle с состоянием changin
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
+    data-testid="circle-head"
   />
   <div
     className="circle   changing"
+    data-testid="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -224,9 +242,11 @@ exports[`Рендер Circle Рендер Circle с состоянием default
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
+    data-testid="circle-head"
   />
   <div
     className="circle   default"
+    data-testid="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -248,9 +268,11 @@ exports[`Рендер Circle Рендер Circle с состоянием modifie
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
+    data-testid="circle-head"
   />
   <div
     className="circle   modified"
+    data-testid="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -272,9 +294,11 @@ exports[`Рендер Circle Рендер Circle с текстом 1`] = `
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
+    data-testid="circle-head"
   />
   <div
     className="circle   default"
+    data-testid="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"
@@ -296,9 +320,11 @@ exports[`Рендер Circle Рендер Circle с текстом 2`] = `
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
+    data-testid="circle-head"
   />
   <div
     className="circle   default"
+    data-testid="circle"
   >
     <p
       className="text text_type_circle text_color_input letter"

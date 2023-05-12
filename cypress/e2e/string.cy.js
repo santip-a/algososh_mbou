@@ -1,24 +1,23 @@
+import {circle, button, input} from './constants';
+
 describe("Тест страницы Строка", function () {
   before(function () {
     cy.visit("recursion");
-    cy.get('[data-testid="input"]').as("input")
-    cy.get('[data-testid="button"]').as("button")
   });
 
   it("Если в инпуте пусто, то кнопка добавления недоступна", function () {
-    cy.get("@input")
+    cy.get(input)
       .should("have.value", "")
       .then(() => {
-        cy.get("@button").should("be.disabled");
+        cy.get(button).should("be.disabled");
       });
   });
 
   it("Тест разворачивания строки", () => {
     cy.visit("recursion");
-    cy.get('[data-testid="input"]').as("input")
-    cy.get("@input").type("12345");
+    cy.get(input).type("12345");
     cy.contains("Развернуть").click();
-    cy.get('div[class*="circle_circle"]').as('circles')
+    cy.get(circle).as('circles')
 
     cy.get('@circles').should(($lis) => {
       expect($lis).to.have.length(5)
